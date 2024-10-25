@@ -6,8 +6,10 @@ import { ImageButton } from "ImageButton.slint";
 
 export component AppWindow inherits Window {
     width: 1280px;
-    height: 480px;
+    height: 400px;
     background: black;
+
+    in property <image> video-frame <=> image.source;
 
     in property <string> prindle: "P";
     in property <string> gear: "1";
@@ -188,12 +190,12 @@ export component AppWindow inherits Window {
     }
 
     HorizontalLayout {
-        y: root.height * 0.19;
+        y: root.height * 0.2;
         height: 80%;
         width: 95%;
         alignment: center;
         accelerometer := CircularGauge {
-            width: 30%;
+            width: 25%;
             height: self.width;
             style: {
                 min-angle: -145deg,
@@ -209,16 +211,15 @@ export component AppWindow inherits Window {
         }
 
         Rectangle {
-            width: 40%;
-            Rectangle {
+            width: 50%;
+            image := Image {
                 width: 90%;
                 height: 90%;
-                background: white;
-                opacity: 0.1;
             }
         }
+
         tachometer := CircularGauge {
-            width: 30%;
+            width: 25%;
             height: self.width;
             style: {
                 min-angle: -145deg,
