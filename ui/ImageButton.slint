@@ -1,0 +1,12 @@
+export component ImageButton inherits Image{
+    image-fit: contain;
+    in property <[image]> sources;
+    in-out property <int> source-index: 0;
+    source: root.sources[mod(root.source-index, root.sources.length)];
+
+    TouchArea {
+        clicked => {
+            root.source-index += 1;
+        }
+    }
+}

@@ -1,0 +1,19 @@
+export component IndicatorFrame inherits Rectangle {
+    width: self.height;
+    border-radius: self.height / 5;
+    border-width: 2px;
+    border-color: gray;
+
+    out property <bool> pressed <=> ta.pressed;
+    ta := TouchArea {
+        width: 100%;
+        height: 100%;
+    }
+    VerticalLayout {
+        alignment: center;
+        HorizontalLayout {
+            alignment: center;
+            @children
+        }
+    }
+}

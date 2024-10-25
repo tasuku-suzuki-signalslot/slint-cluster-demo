@@ -1,0 +1,297 @@
+export struct TickMark {
+    angle: angle,
+    label: string,
+    color: color,
+}
+
+export struct SubTickMark {
+    angle: angle,
+}
+
+export struct WarningCircumference {
+    from: float,
+    to: float,
+    color: color,
+}
+
+export struct CircularGaugeStyle {
+    min-angle: angle,
+    max-angle: angle,
+    min-value: int,
+    max-value: int,
+    tick-interval: int,
+    sub-tick-interval: int,
+    label-interval: int,
+    label-position-outside: bool,
+    tick-marks: [TickMark],
+    sub-tick-marks: [SubTickMark],
+    warning-circumferences: WarningCircumference,
+    unit: string,
+}
+
+export component CircularGauge {
+    in property <length> r: self.width > self.height ? self.width / 2 : self.height / 2;
+    width: 300px;
+    height: 300px;
+    Rectangle {
+        width: 100%;
+        height: 100%;
+        clip: self.width != self.height;
+
+        border := Rectangle {
+            y: 0;
+            width: 100%;
+            height: self.width;
+            background: transparent;
+            border-radius: self.width / 2;
+            border-width: self.width * 1%;
+            border-color: #222;
+        }
+
+        Rectangle {
+            y: (root.width - self.width) / 2;
+            width: 96%;
+            height: self.width;
+            background: #222;
+            border-radius: self.width / 2;
+        }
+
+        Rectangle {
+            y: (root.width - self.width) / 2;
+            width: 96%;
+            height: self.width;
+            background: @radial-gradient(circle, #FFFFFF00 0%, #FFFFFF02 70%, #FFFFFF 100%);
+            border-radius: self.width / 2;
+            opacity: 0.1;
+        }
+
+        VerticalLayout {
+            y: root.width * 3 / 5;
+            spacing: root.width / 30;
+            Text {
+                text: floor(root.value);
+                height: self.font-size;
+                horizontal-alignment: TextHorizontalAlignment.center;
+                vertical-alignment: TextVerticalAlignment.center;
+                color: white;
+                font-size: root.r / 3;
+            }
+            Text {
+                text: root.style.unit;
+                height: self.font-size;
+                horizontal-alignment: TextHorizontalAlignment.center;
+                vertical-alignment: TextVerticalAlignment.center;
+                color: white;
+                font-size: root.r / 8;
+            }
+        }
+    
+    }
+
+    if root.style.warning-circumferences.color != Colors.transparent : Path {
+        y: (root.width - self.width) / 2;
+        width: 96%;
+        height: self.width;
+        MoveTo {
+            x: -100;
+            y: -100;
+        }
+
+        MoveTo {
+            x: +100;
+            y: +100;
+        }
+
+        MoveTo {
+            x: 100 * cos((root.style.warning-circumferences.to - 0.1) * (root.style.max-angle - root.style.min-angle) / (root.style.max-value - root.style.min-value) + root.style.min-angle - 90deg);
+            y: 100 * sin((root.style.warning-circumferences.to - 0.1) * (root.style.max-angle - root.style.min-angle) / (root.style.max-value - root.style.min-value) + root.style.min-angle - 90deg);
+        }
+
+        ArcTo {
+            x: 100 * cos((root.style.warning-circumferences.from + 0.15) * (root.style.max-angle - root.style.min-angle) / (root.style.max-value - root.style.min-value) + root.style.min-angle - 90deg);
+            y: 100 * sin((root.style.warning-circumferences.from + 0.15) * (root.style.max-angle - root.style.min-angle) / (root.style.max-value - root.style.min-value) + root.style.min-angle - 90deg);
+            radius-x: 100;
+            radius-y: 100;
+        }
+        stroke: root.style.warning-circumferences.color;
+        stroke-width: self.width / 30;
+        opacity: 0.5;
+    }
+
+    in-out property <CircularGaugeStyle> style;
+    for data in root.style.tick-marks: Path {
+        y: (root.width - self.width) / 2;
+        width: 96%;
+        height: self.width;
+        function calc-x(x: float) -> float {
+            return (100 + x) * cos(data.angle - 90deg);
+        }
+        function calc-y(y: float) -> float {
+            return (100 + y) * sin(data.angle - 90deg);
+        }
+        MoveTo {
+            x: -100;
+            y: -100;
+        }
+
+        MoveTo {
+            x: +100;
+            y: +100;
+        }
+
+        MoveTo {
+            x: calc-x(  0);
+            y: calc-y(  0);
+        }
+
+        LineTo {
+            x: calc-x(-5);
+            y: calc-y(-5);
+        }
+
+        stroke: data.color == transparent ? white : data.color;
+        stroke-width: root.width / 100;
+    }
+
+    for data in root.style.tick-marks: Text {
+        text: data.label;
+        property <float> distance: root.style.label-position-outside ? 1.2 : 0.77;
+        x: root.r * self.distance * cos(data.angle - 90deg) + root.r - self.font-size * 2;
+        y: root.r * self.distance * sin(data.angle - 90deg) + root.r - self.font-size;
+        width: self.font-size * 4;
+        height: self.font-size * 2;
+        horizontal-alignment: TextHorizontalAlignment.center;
+        vertical-alignment: TextVerticalAlignment.center;
+        color: data.color == transparent ? white : data.color;
+        font-size: root.r / (root.style.label-position-outside ? 5 : 10);
+    }
+
+    for data in root.style.sub-tick-marks: Path {
+        y: (root.width - self.width) / 2;
+        width: 96%;
+        height: self.width;
+        function calc-x(x: float) -> float {
+            return (100 + x) * cos(data.angle - 90deg);
+        }
+        function calc-y(y: float) -> float {
+            return (100 + y) * sin(data.angle - 90deg);
+        }
+        MoveTo {
+            x: -100;
+            y: -100;
+        }
+
+        MoveTo {
+            x: +100;
+            y: +100;
+        }
+
+        MoveTo {
+            x: calc-x(  0);
+            y: calc-y(  0);
+        }
+
+        LineTo {
+            x: calc-x(-3);
+            y: calc-y(-3);
+        }
+
+        stroke: white;
+        stroke-width: root.width / 200;
+    }
+
+
+    @children
+
+    in-out property <float> value: 0;
+
+    needle := Rectangle {
+        y: (root.width - self.width) / 2;
+        width: 96%;
+        height: self.width;
+
+        property <angle> angle: (root.style.max-angle - root.style.min-angle) * (root.value - root.style.min-value) / (root.style.max-value - root.style.min-value) + root.style.min-angle;
+
+        Path {
+            MoveTo {
+                x: -100;
+                y: -100;
+            }
+
+            MoveTo {
+                x: +100;
+                y: +100;
+            }
+
+            // draw needle in diamond shape
+            MoveTo {
+                x: -10 * cos(needle.angle - 90deg);
+                y: -10 * sin(needle.angle - 90deg);
+            }
+
+            LineTo {
+                x: 100 * cos(needle.angle - 90deg);
+                y: 100 * sin(needle.angle - 90deg);
+            }
+
+            LineTo {
+                x: 5 * sin(needle.angle - 90deg);
+                y: -5 * cos(needle.angle - 90deg);
+            }
+
+            LineTo {
+                x: -10 * cos(needle.angle - 90deg);
+                y: -10 * sin(needle.angle - 90deg);
+            }
+
+            fill: #FF000066;
+        }
+
+        Path {
+            MoveTo {
+                x: -100;
+                y: -100;
+            }
+
+            MoveTo {
+                x: +100;
+                y: +100;
+            }
+
+            // draw needle in diamond shape
+            MoveTo {
+                x: -10 * cos(needle.angle - 90deg);
+                y: -10 * sin(needle.angle - 90deg);
+            }
+
+            LineTo {
+                x: 100 * cos(needle.angle - 90deg);
+                y: 100 * sin(needle.angle - 90deg);
+            }
+
+            LineTo {
+                x: -5 * sin(needle.angle - 90deg);
+                y: 5 * cos(needle.angle - 90deg);
+            }
+
+            LineTo {
+                x: -10 * cos(needle.angle - 90deg);
+                y: -10 * sin(needle.angle - 90deg);
+            }
+
+            fill: #FF0000CC;
+        }
+    }
+    ta := TouchArea {}
+    states [
+        active when ta.pressed: {
+            root.value: root.style.max-value;
+            in {
+                animate root.value { duration: 1000ms; }
+            }
+            out {
+                animate root.value { duration: 800ms; }
+            }
+        }
+    ]
+}

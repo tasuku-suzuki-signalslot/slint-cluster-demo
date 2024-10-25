@@ -1,0 +1,55 @@
+export component TurnIndicator inherits Path {
+    width: self.height;
+    height: 100px;
+
+    stroke: lightgray;
+    stroke-width: 1px;
+
+    in property <bool> mirror: false;
+    function direction(v : float) -> float {
+        return root.mirror ? 100 - v : v;
+    }
+
+    in property <bool> blink: false;
+    fill: blink ? green : transparent;
+
+    MoveTo {
+        x: direction(  0%);
+        y: direction( 50%);
+    }
+
+    LineTo {
+        x: direction( 60%);
+        y: direction(  0%);
+    }
+
+    LineTo {
+        x: direction( 60%);
+        y: direction( 28%);
+    }
+
+    LineTo {
+        x: direction(100%);
+        y: direction( 28%);
+    }
+
+    LineTo {
+        x: direction(100%);
+        y: direction( 72%);
+    }
+
+    LineTo {
+        x: direction( 60%);
+        y: direction( 72%);
+    }
+
+    LineTo {
+        x: direction( 60%);
+        y: direction(100%);
+    }
+
+    LineTo {
+        x: direction(  0%);
+        y: direction( 50%);
+    }
+}

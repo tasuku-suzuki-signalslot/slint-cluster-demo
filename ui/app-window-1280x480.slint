@@ -1,0 +1,311 @@
+import { Button, VerticalBox, HorizontalBox } from "std-widgets.slint";
+import { TurnIndicator } from "TurnIndicator.slint";
+import { IndicatorFrame } from "IndicatorFrame.slint";
+import { CircularGauge, TickMark, SubTickMark, CircularGaugeStyle } from "CircularGauge.slint";
+import { ImageButton } from "ImageButton.slint";
+
+export component AppWindow inherits Window {
+    width: 1280px;
+    height: 480px;
+    background: black;
+
+    in property <string> prindle: "P";
+    in property <string> gear: "1";
+    in-out property <CircularGaugeStyle> accelerometer-style <=> accelerometer.style;
+    in-out property <CircularGaugeStyle> tachometer-style <=> tachometer.style;
+    in-out property <CircularGaugeStyle> fuel-gauge-style <=> fuel-gauge.style;
+    in-out property <CircularGaugeStyle> temp-gauge-style <=> temp-gauge.style;
+
+
+    HorizontalLayout {
+        y: self.height / 4;
+        height: 12.5%;
+        alignment: center;
+        spacing: root.width * 0.01;
+
+        IndicatorFrame {
+            TurnIndicator {
+                height: root.height * 0.10;
+                mirror: false;
+                blink: parent.pressed;
+            }
+        }
+
+        IndicatorFrame {
+            ImageButton {
+                height: root.height * 0.10;
+                width: self.height;
+                sources: [
+                    @image-url("./images/AGL_Icons_Engine.svg"),
+                    @image-url("./images/AGL_Icons_Engine_yellow.svg"),
+                    @image-url("./images/AGL_Icons_Engine_red.svg"),
+                ];
+            }
+        }
+
+        IndicatorFrame {
+            ImageButton {
+                height: root.height * 0.10;
+                width: self.height;
+                sources: [
+                    @image-url("./images/AGL_Icons_Oil.svg"),
+                    @image-url("./images/AGL_Icons_Oil_yellow.svg"),
+                    @image-url("./images/AGL_Icons_Oil_red.svg"),
+                ];
+            }
+        }
+
+        IndicatorFrame {
+            ImageButton {
+                height: root.height * 0.10;
+                width: self.height;
+                sources: [
+                    @image-url("./images/AGL_Icons_Battery.svg"),
+                    @image-url("./images/AGL_Icons_Battery_yellow.svg"),
+                    @image-url("./images/AGL_Icons_Battery_red.svg"),
+                ];
+            }
+        }
+
+        IndicatorFrame {
+            ImageButton {
+                height: root.height * 0.10;
+                width: self.height;
+                image-fit: contain;
+                sources: [
+                    @image-url("./images/AGL_Icons_ABS.svg"),
+                    @image-url("./images/AGL_Icons_ABS_yellow.svg"),
+                    @image-url("./images/AGL_Icons_ABS_red.svg"),
+                ];
+            }
+        }
+
+        IndicatorFrame {
+            ImageButton {
+                height: root.height * 0.10;
+                width: self.height;
+                sources: [
+                    @image-url("./images/AGL_Icons_ParkingBrake.svg"),
+                    @image-url("./images/AGL_Icons_ParkingBrake_yellow.svg"),
+                    @image-url("./images/AGL_Icons_ParkingBrake_red.svg"),
+                ];
+            }
+        }
+
+        IndicatorFrame {
+            Text {
+                height: root.height * 0.10;
+                width: self.height;
+                text: root.prindle;
+                color: white;
+                font-size: self.height * 0.9;
+                horizontal-alignment: center;
+                vertical-alignment: center;
+            }
+        }
+
+        IndicatorFrame {
+            Text {
+                height: root.height * 0.10;
+                width: self.height;
+                text: root.gear;
+                color: white;
+                font-size: self.height * 0.9;
+                horizontal-alignment: center;
+                vertical-alignment: center;
+            }
+        }
+
+        IndicatorFrame {
+            ImageButton {
+                height: root.height * 0.10;
+                width: self.height;
+                sources: [
+                    @image-url("./images/AGL_Icons_Seatbelt.svg"),
+                    @image-url("./images/AGL_Icons_Seatbelt_yellow.svg"),
+                    @image-url("./images/AGL_Icons_Seatbelt_red.svg"),
+                ];
+            }
+        }
+
+        IndicatorFrame {
+            ImageButton {
+                height: root.height * 0.10;
+                width: self.height;
+                sources: [
+                    @image-url("./images/AGL_Icons_OpenDoor.svg"),
+                    @image-url("./images/AGL_Icons_OpenDoor_yellow.svg"),
+                    @image-url("./images/AGL_Icons_OpenDoor_red.svg"),
+                ];
+            }
+        }
+
+        IndicatorFrame {
+            ImageButton {
+                height: root.height * 0.10;
+                width: self.height;
+                sources: [
+                    @image-url("./images/AGL_Icons_Lights.svg"),
+                    @image-url("./images/AGL_Icons_Lights_yellow.svg"),
+                    @image-url("./images/AGL_Icons_Lights_red.svg"),
+                ];
+            }
+        }
+
+        IndicatorFrame {
+            ImageButton {
+                height: root.height * 0.10;
+                width: self.height;
+                sources: [
+                    @image-url("./images/AGL_Icons_CruiseControl.svg"),
+                    @image-url("./images/AGL_Icons_CruiseControl_green.svg"),
+                    @image-url("./images/AGL_Icons_CruiseControl_white.svg"),
+                    @image-url("./images/AGL_Icons_CruiseControl_yellow.svg"),
+                ];
+            }
+        }
+
+        IndicatorFrame {
+            ImageButton {
+                height: root.height * 0.10;
+                width: self.height;
+                sources: [
+                    @image-url("./images/AGL_Icons_LaneDeparture.svg"),
+                    @image-url("./images/AGL_Icons_LaneDeparture_green.svg"),
+                    @image-url("./images/AGL_Icons_LaneDeparture_yellow.svg"),
+                    @image-url("./images/AGL_Icons_LaneDeparture_red.svg"),
+                    @image-url("./images/AGL_Icons_LaneDeparture_white.svg"),
+                ];
+            }
+        }
+
+        IndicatorFrame {
+            TurnIndicator {
+                height: root.height * 0.10;
+                mirror: true;
+                blink: parent.pressed;
+            }
+        }
+    }
+
+    HorizontalLayout {
+        y: root.height * 0.19;
+        height: 80%;
+        width: 95%;
+        alignment: center;
+        accelerometer := CircularGauge {
+            width: 30%;
+            height: self.width;
+            style: {
+                min-angle: -145deg,
+                max-angle: +145deg,
+                min-value: 0,
+                max-value: 220,
+                tick-interval: 10,
+                sub-tick-interval: 2,
+                label-interval: 20,
+                label-position-outside: false,
+                unit: "km/h",
+            };
+        }
+
+        Rectangle {
+            width: 40%;
+            Rectangle {
+                width: 90%;
+                height: 90%;
+                background: white;
+                opacity: 0.1;
+            }
+        }
+        tachometer := CircularGauge {
+            width: 30%;
+            height: self.width;
+            style: {
+                min-angle: -145deg,
+                max-angle: +145deg,
+                min-value: 0,
+                max-value: 8,
+                tick-interval: 1,
+                label-interval: 1,
+                label-position-outside: false,
+                warning-circumferences: {
+                    from: 7,
+                    to: 8,
+                    color: Colors.red,
+                },
+                unit: "RPM",
+            };
+
+            Text {
+                y: parent.height * 1 / 5;
+                text: "x1000";
+                height: self.font-size;
+                horizontal-alignment: TextHorizontalAlignment.center;
+                vertical-alignment: TextVerticalAlignment.center;
+                color: white;
+                font-size: parent.r / 10;
+            }
+
+            fuel-gauge := CircularGauge {
+                x: -self.width / 3;
+                y: parent.width * 0.85;
+                width: 20%;
+                height: 11%;
+                style: {
+                    min-angle: -60deg,
+                    max-angle: +60deg,
+                    min-value: 0,
+                    max-value: 4,
+                    tick-interval: 4,
+                    sub-tick-interval: 1,
+                    label-interval: 0,
+                    label-position-outside: true,
+                    warning-circumferences: {
+                        from: 0,
+                        to: 1,
+                        color: Colors.red,
+                    },
+                    unit: "L",
+                };
+                Image {
+                    y: parent.height * 2 / 5;
+                    width: 15%;
+                    height: self.width;
+                    image-fit: contain;
+                    source: @image-url("./images/fuel-icon.png");
+                }
+            }
+    
+            temp-gauge := CircularGauge {
+                x: parent.width - self.width * 2 / 3;
+                y: parent.width * 0.85;
+                width: 20%;
+                height: 11%;
+                style: {
+                    min-angle: -60deg,
+                    max-angle: +60deg,
+                    min-value: 0,
+                    max-value: 4,
+                    tick-interval: 4,
+                    sub-tick-interval: 1,
+                    label-interval: 0,
+                    label-position-outside: true,
+                    warning-circumferences: {
+                        from: 3,
+                        to: 4,
+                        color: Colors.red,
+                    },
+                    unit: "°C",
+                };
+                Image {
+                    y: parent.height * 2 / 5;
+                    width: 15%;
+                    height: self.width;
+                    image-fit: contain;
+                    source: @image-url("./images/temperature-icon.png");
+                }
+            }
+        }
+    }
+}

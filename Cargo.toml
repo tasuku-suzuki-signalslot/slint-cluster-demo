@@ -1,0 +1,22 @@
+[package]
+name = "agl-cluster-demo"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+slint = { path = "../slint/api/rs/slint" }
+anyhow = { version = "1.0" }
+futures = { version = "0.3.28" }
+
+
+gst = {package = "gstreamer", version = "0.21.3"}
+gst-audio = {package = "gstreamer-audio", version = "0.21.3" }
+gst-video = {package = "gstreamer-video", version = "0.21.2" }
+gst-app = {package = "gstreamer-app", version = "0.21.2" }
+
+
+[build-dependencies]
+slint-build = { path = "../slint/api/rs/build" }
+
