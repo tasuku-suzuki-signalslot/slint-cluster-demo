@@ -6,7 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-slint = { path = "../slint/api/rs/slint" }
+# slint = { path = "../slint/api/rs/slint" }
+slint = { version = "1.8.0" }
 anyhow = { version = "1.0" }
 futures = { version = "0.3.28" }
 
@@ -18,5 +19,5 @@ gst-app = {package = "gstreamer-app", version = "0.21.2" }
 
 
 [build-dependencies]
-slint-build = { path = "../slint/api/rs/build" }
-
+# slint-build = { path = "../slint/api/rs/build" }
+slint-build = { version = "1.8.0" }
