@@ -248,10 +248,11 @@ export component AppWindow inherits Window {
             }
 
             fuel-gauge := CircularGauge {
-                x: -self.width / 3;
+                x: -self.width * 0.3;
                 y: parent.width * 0.85;
-                width: 20%;
-                height: 11%;
+                z: 1;
+                width: 30%;
+                height: 15%;
                 style: {
                     min-angle: -60deg,
                     max-angle: +60deg,
@@ -278,10 +279,11 @@ export component AppWindow inherits Window {
             }
     
             temp-gauge := CircularGauge {
-                x: parent.width - self.width * 2 / 3;
+                x: parent.width - self.width * 0.7;
                 y: parent.width * 0.85;
-                width: 20%;
-                height: 11%;
+                z: 1;
+                width: 30%;
+                height: 15%;
                 style: {
                     min-angle: -60deg,
                     max-angle: +60deg,
